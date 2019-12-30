@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.update.record.mapper.ResourceMapper">
+    <resultMap id="BaseResultMap" type="com.example.update.record.domain.Resource">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="rs_no" jdbcType="VARCHAR" property="rsNo"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="depth" jdbcType="INTEGER" property="depth"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="seq_num" jdbcType="INTEGER" property="seqNum"/>
+        <result column="icon_path" jdbcType="VARCHAR" property="iconPath"/>
+        <result column="parent_no" jdbcType="VARCHAR" property="parentNo"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, rs_no, url, path, depth, name, seq_num, icon_path, parent_no, opt_counter, is_deleted,
+        create_by, create_date, update_by, update_date
+    </sql>
+
+    <select id="selectResourceById" parameterType="java.lang.Long" resultType="com.example.update.record.domain.Resource">
+        select * from t_resources where id = #{id};
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_resources
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.example.update.record.domain.Resource" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_resources
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="rsNo != null">
+                rs_no,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="depth != null">
+                depth,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="seqNum != null">
+                seq_num,
+            </if>
+            <if test="iconPath != null">
+                icon_path,
+            </if>
+            <if test="parentNo != null">
+                parent_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="rsNo != null">
+                #{rsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="depth != null">
+                #{depth,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="seqNum != null">
+                #{seqNum,jdbcType=INTEGER},
+            </if>
+            <if test="iconPath != null">
+                #{iconPath,jdbcType=VARCHAR},
+            </if>
+            <if test="parentNo != null">
+                #{parentNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.update.record.domain.Resource">
+        update t_resources
+        <set>
+            <if test="rsNo != null">
+                rs_no = #{rsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="depth != null">
+                depth = #{depth,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="seqNum != null">
+                seq_num = #{seqNum,jdbcType=INTEGER},
+            </if>
+            <if test="iconPath != null">
+                icon_path = #{iconPath,jdbcType=VARCHAR},
+            </if>
+            <if test="parentNo != null">
+                parent_no = #{parentNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

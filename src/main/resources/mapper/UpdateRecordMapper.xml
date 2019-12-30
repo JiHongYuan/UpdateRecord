@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.update.record.mapper.UpdateRecordMapper">
+    <resultMap type="com.example.update.record.domain.UpdateRecord" id="UpdateRecordResult">
+        <result property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="typeId" column="type_id"/>
+        <result property="field" column="field"/>
+        <result property="fieldRemark" column="field_remark"/>
+        <result property="oldText" column="old_text"/>
+        <result property="newText" column="new_text"/>
+        <result property="remark" column="remark"/>
+        <result property="action" column="action"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectUpdateRecordVo">
+        select id, type, type_id, field, field_remark, old_text, new_text, remark, action, create_time from biz_update_record
+    </sql>
+
+    <select id="selectUpdateRecordList" parameterType="UpdateRecord" resultMap="UpdateRecordResult">
+        select
+        r.id, r.type, r.type_id, r.field, r.field_remark, r.old_text, r.new_text, r.remark, r.action, r.create_time
+        from biz_update_record as r
+        <where>
+            <if test="type != null  and type != ''">and r.type = #{type}</if>
+            <if test="typeId != null  and typeId != ''">and r.type_id = #{typeId}</if>
+            <if test="field != null  and field != ''">and r.field = #{field}</if>
+            <if test="fieldRemark != null  and fieldRemark != ''">and r.field_remark = #{fieldRemark}</if>
+            <if test="oldText != null  and oldText != ''">and r.old_text = #{oldText}</if>
+            <if test="newText != null  and newText != ''">and r.new_text = #{newText}</if>
+            <if test="remark != null  and remark != ''">and r.remark = #{remark}</if>
+        </where>
+        order by r.create_time desc
+    </select>
+
+    <select id="selectUpdateRecordById" parameterType="Long" resultMap="UpdateRecordResult">
+        <include refid="selectUpdateRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUpdateRecord" parameterType="UpdateRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_update_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null  and type != ''">type,</if>
+            <if test="typeId != null  and typeId != ''">type_id,</if>
+            <if test="field != null  and field != ''">field,</if>
+            <if test="fieldRemark != null  and fieldRemark != ''">field_remark,</if>
+            <if test="oldText != null  and oldText != ''">old_text,</if>
+            <if test="newText != null  and newText != ''">new_text,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="action != null  and action != ''">action,</if>
+            <if test="createTime != null ">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null  and type != ''">#{type},</if>
+            <if test="typeId != null  and typeId != ''">#{typeId},</if>
+            <if test="field != null  and field != ''">#{field},</if>
+            <if test="fieldRemark != null  and fieldRemark != ''">#{fieldRemark},</if>
+            <if test="oldText != null  and oldText != ''">#{oldText},</if>
+            <if test="newText != null  and newText != ''">#{newText},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="action != null  and action != ''">#{action},</if>
+            <if test="createTime != null ">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUpdateRecord" parameterType="UpdateRecord">
+        update biz_update_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null  and type != ''">type = #{type},</if>
+            <if test="typeId != null  and typeId != ''">type_id = #{typeId},</if>
+            <if test="field != null  and field != ''">field = #{field},</if>
+            <if test="fieldRemark != null  and fieldRemark != ''">field_remark = #{fieldRemark},</if>
+            <if test="oldText != null  and oldText != ''">old_text = #{oldText},</if>
+            <if test="newText != null  and newText != ''">new_text = #{newText},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="action != null  and action != ''">action = #{action},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUpdateRecordById" parameterType="Long">
+        delete from biz_update_record where id = #{id}
+    </delete>
+
+</mapper>
